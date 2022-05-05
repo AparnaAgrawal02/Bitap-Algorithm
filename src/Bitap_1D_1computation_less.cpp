@@ -27,7 +27,7 @@ int main(int argc, char **argv)
             if (!id.empty())
                 // std::cout << id << " : " << text << std::endl;
 
-            id = line.substr(1);
+                id = line.substr(1);
             text.clear();
         }
         else
@@ -49,7 +49,7 @@ int main(int argc, char **argv)
             if (!id.empty())
                 // std::cout << id << " : " << DNA_sequence << std::endl;
 
-            id = line.substr(1);
+                id = line.substr(1);
             pattern.clear();
         }
         else
@@ -63,8 +63,6 @@ int main(int argc, char **argv)
     // if (!id.empty())
     //     std::cout << id << " : " << text << std::endl;
 
-
-
     // cin >> text;
     // cin >> pattern;
     // text = argv[1];
@@ -75,36 +73,37 @@ int main(int argc, char **argv)
     //     return 0;
     // }
     // cout << pattern.length();
-    
-    //vector<vector<int>> pattern_bitmask(4, vector<int>(pattern.length() + 1, 0));   //0 th vector is A,1 th C,2 -G,3 -T 
-    unsigned long long R =0;
-    vector<unsigned long long> pattern_bitmask(4,0);
-    std::map<char, int>link;
+
+    // vector<vector<int>> pattern_bitmask(4, vector<int>(pattern.length() + 1, 0));   //0 th vector is A,1 th C,2 -G,3 -T
+    unsigned long long R;
+    vector<unsigned long long> pattern_bitmask(4, ~0);
+    std::map<char, int> link;
     link['A'] = 0;
-    link['C'] =1;
-    link['G'] =2;
-    link['T'] =3;
+    link['C'] = 1;
+    link['G'] = 2;
+    link['T'] = 3;
 
-    //set 1 for match
-    for (long long i = 0; i < pattern.length() ; i++)
-    {     pattern_bitmask[link[pattern[i]]]|= 1<< i ;  //reverse 
+    // set 0 for match
 
+    
+    for (long long i = 0; i < pattern.length(); i++)
+
+    {
+          pattern_bitmask[link[pattern[i]]] &= ~(1 << i); // reverse
     }
-    /* for(long long i = 0; i < 4; i++){
-        cout<<pattern_bitmask[i];
-    } */
+   
+    R = 2 ^ pattern.length() - 1;
 
-    for (long long j = 0; j < text.length(); j++){
-        R|=1;                                                   //to set 1st bit cause 0&1 ==0 and 1&1 =1 and left shift adds 0 
-         R= R & pattern_bitmask[link[text[j]]];                 //ita j-1 th column shifted 1 bit and bitmask of character at jth index
-         R <<= 1;                                               //shift
-        
-        if (1 == (( R>> ( pattern.length())) & 1))              //this means whole pattern is there at j-m+1 pos
-               cout << "{" << j - pattern.length() + 2 << "}";
-        //cout<< "["<<R<<"]";
+    for (long long j = 0; j < text.length(); j++)
+    {
+        // to set 1st bit cause 0&1 ==0 and 1&1 =1 and left shift adds 0
+        R = R | pattern_bitmask[link[text[j]]]; // ita j-1 th column shifted 1 bit and bitmask of character at jth index
+        R <<= 1;                                // shift
 
+        if (0 == ((R >> (pattern.length() )) & 1)) // this means whole pattern is there at j-m+1 pos
+            cout << "{" << j - pattern.length() + 2 << "}";
+       // cout << "[" << R << "]";
     }
-
 
     return 0;
 }

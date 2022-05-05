@@ -92,7 +92,7 @@ int main(int argc, char **argv)
             }
             if (R[pattern.length()][j] == 1)
             {
-                cout << "{" << j - pattern.length() + 1 << "}";     // indexing start from 1 // where you find the patern
+                cout << "{" << j - pattern.length()+1 << "}";     // indexing start from 1 // where you find the patern
             }
             //cout << "R[" << i << "][" << j << "]" << R[i][j];
         }
