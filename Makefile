@@ -2,7 +2,9 @@
 SRC_DIR = src
 HEADERS_DIR = $(SRC_DIR)
 
-CC = clang++
+INP_DIR = alignment_dataset/medium
+# INP_FILE = $(INP_DIR)
+CC = g++
 CFLAGS = -I$(HEADERS_DIR) -g -std=c++17 # -fsanitize=thread 
 
 HEADERS_PATHLESS = utils.h
@@ -14,8 +16,12 @@ EXECUTABLES = bitap
 # 	$(CC) $(CFLAGS) $^ -o $@
 
 
-bitap: $(SRC_DIR)/Bitap.cpp $(HEADERS)
+bitap: $(SRC_DIR)/Bitap.cpp $(HEADERS_DIR)/utils.h
 	$(CC) $(CFLAGS) $(SRC_DIR)/Bitap.cpp -o $@
+
+
+# bitap: $(SRC_DIR)/Bitap.cpp $(HEADERS)
+# 	$(CC) $(CFLAGS) $(SRC_DIR)/Bitap.cpp -o $@
 
 debug: CFLAGS += -DDEBUG=1 -Wall -Wextra -O2 -Wswitch-default -Wconversion -Wundef -fsanitize=address -fsanitize=undefined -fstack-protector # -Werror
 debug: bitap
@@ -25,3 +31,7 @@ dev: bitap
 
 clean:
 	rm -f bitap
+
+# .PHONY: run
+# run:
+#     ./bitap $(INP_DIR)/1.fasta $(INP_DIR)/2.fasta 
