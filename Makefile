@@ -10,27 +10,29 @@ CFLAGS = -I$(HEADERS_DIR) -g -std=c++17 # -fsanitize=thread
 HEADERS_PATHLESS = utils.h
 HEADERS = $(patsubst %, $(HEADERS_DIR)/%, $(HEADERS_PATHLESS))
 
-EXECUTABLES = bitap
-#all:tarjan schmidt #bitap
+EXECUTABLES = bitap_1D
+all:bitap_1D bitap_2D #bitap
 # all: $(SRC_DIR)/%.cpp $(HEADERS_DIR)/%.h $(HEADERS_DIR)/%.hpp 
 # 	$(CC) $(CFLAGS) $^ -o $@
 
 
-bitap: $(SRC_DIR)/Bitap.cpp $(HEADERS_DIR)/utils.h
-	$(CC) $(CFLAGS) $(SRC_DIR)/Bitap.cpp -o $@
+bitap_1D: $(SRC_DIR)/Bitap_1D.cpp $(HEADERS_DIR)/utils.h
+	$(CC) $(CFLAGS) $(SRC_DIR)/Bitap_1D.cpp -o $@
 
+bitap_2D: $(SRC_DIR)/Bitap_2D.cpp $(HEADERS_DIR)/utils.h
+	$(CC) $(CFLAGS) $(SRC_DIR)/Bitap_2D.cpp -o $@
 
 # bitap: $(SRC_DIR)/Bitap.cpp $(HEADERS)
 # 	$(CC) $(CFLAGS) $(SRC_DIR)/Bitap.cpp -o $@
 
 debug: CFLAGS += -DDEBUG=1 -Wall -Wextra -O2 -Wswitch-default -Wconversion -Wundef -fsanitize=address -fsanitize=undefined -fstack-protector # -Werror
-debug: bitap
+debug: bitap_1D bitap_2D
 
 dev: CFLAGS += -Wall -Wextra -O2 -Wswitch-default -Wconversion -Wundef -fsanitize=address -fsanitize=undefined -fstack-protector
-dev: bitap
+dev: bitap_1D bitap_2D
 
 clean:
-	rm -f bitap
+	rm -f bitap_2D bitap_1D
 
 # .PHONY: run
 # run:

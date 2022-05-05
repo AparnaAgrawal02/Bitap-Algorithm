@@ -76,7 +76,7 @@ int main(int argc, char **argv)
     // }
     // cout << pattern.length();
     vector<vector<int>> R(pattern.length() + 2, vector<int>(text.length() + 1, 0));
-
+    cout<<pattern<<"|"<<text;
     for (long long i = 0; i < pattern.length() + 1; i++)
     {
         for (long long j = 0; j < text.length() + 1; j++)
@@ -92,9 +92,9 @@ int main(int argc, char **argv)
             }
             if (R[pattern.length()][j] == 1)
             {
-                cout << "{" << j - pattern.length() + 1 << "}";
+                cout << "{" << j - pattern.length() + 1 << "}";     // indexing start from 1 // where you find the patern
             }
-            cout << "R[" << i << "][" << j << "]" << R[i][j];
+            //cout << "R[" << i << "][" << j << "]" << R[i][j];
         }
     }
 
