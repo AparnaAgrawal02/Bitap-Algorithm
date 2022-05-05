@@ -1,4 +1,5 @@
 #include "utils.h"
+#include "Timer.h"
 int main(int argc, char **argv)
 {
     std::ifstream input(argv[1]);
@@ -84,7 +85,7 @@ int main(int argc, char **argv)
     link['C'] =1;
     link['G'] =2;
     link['T'] =3;
-
+    auto timer = Timer();
     //set 1 for match
     for (long long i = 0; i < pattern.length() ; i++)
     {     pattern_bitmask[link[pattern[i]]]|= 1<< i ;  //reverse 
@@ -93,7 +94,8 @@ int main(int argc, char **argv)
     /* for(long long i = 0; i < 4; i++){
         cout<<pattern_bitmask[i];
     } */
-
+    timer.Start();
+    #pragma omp parallel for
     for (long long j = 0; j < text.length(); j++){
         R|=1;                                                   //to set 1st bit cause 0&1 ==0 and 1&1 =1 and left shift adds 0 
          R= R & pattern_bitmask[link[text[j]]];                 //ita j-1 th column shifted 1 bit and bitmask of character at jth index
@@ -104,7 +106,8 @@ int main(int argc, char **argv)
         //cout<< "["<<R<<"]";
 
     }
-
+    auto time = timer.Stop();
+    cout << "\n Time :" << time << std::endl;
 
     return 0;
 }
