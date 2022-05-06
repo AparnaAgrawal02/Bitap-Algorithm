@@ -81,26 +81,23 @@ int main(int argc, char **argv)
 
     timer.Start();
 
-    int wordSize = 3;
-    int start = 0,end =0;
+    int wordSize = 30;
+    int start = 0, end = 0;
     for (long long r = 0; r < text.length() / wordSize; r += 1)
     {
-        if (r == 0)
+
+        start = r * wordSize;
+
+        if (r != text.length() / wordSize - 1)
         {
-            start = 0;
+            end = r * wordSize + wordSize + pattern.length();
         }
         else
         {
-            start = r * wordSize - pattern.length();
-        }
-        if(r!= text.length() / wordSize-1){
-            end =r*wordSize +wordSize + pattern.length() ;
-        }
-        else{
-            end = text.length() ;
+            end = text.length();
         }
 
-        for (long long j = start;j < wordSize + pattern.length() && text[j] != '\0'; j++)
+        for (long long j = start; j < wordSize + pattern.length() && text[j] != '\0'; j++)
         {
             // to set 1st bit cause 0&1 ==0 and 1&1 =1 and left shift adds 0
             R = R | pattern_bitmask[link[text[j]]]; // ita j-1 th column shifted 1 bit and bitmask of character at jth index
