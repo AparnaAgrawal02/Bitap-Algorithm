@@ -1,4 +1,5 @@
 #include "utils.h"
+#include "Timer.h"
 int main(int argc, char **argv)
 {
     std::ifstream input(argv[1]);
@@ -85,7 +86,7 @@ int main(int argc, char **argv)
 
     // set 0 for match
 
-    
+    auto timer = Timer();
     for (long long i = 0; i < pattern.length(); i++)
 
     {
@@ -94,6 +95,7 @@ int main(int argc, char **argv)
    
     R = 2 ^ pattern.length() - 1;
 
+    timer.Start();
     for (long long j = 0; j < text.length(); j++)
     {
         // to set 1st bit cause 0&1 ==0 and 1&1 =1 and left shift adds 0
@@ -104,6 +106,7 @@ int main(int argc, char **argv)
             cout << "{" << j - pattern.length() + 2 << "}";
        // cout << "[" << R << "]";
     }
-
+    auto time = timer.Stop();
+    cout << "Time: " << time << " ms" << std::endl;
     return 0;
 }

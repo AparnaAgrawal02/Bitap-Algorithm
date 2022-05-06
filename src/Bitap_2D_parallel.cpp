@@ -65,7 +65,7 @@ int main(int argc, char **argv)
     auto timer = Timer();
 
     timer.Start();
-    // #pragma omp parallel for
+    #pragma omp parallel for
     for (long long i = 0; i < pattern.length() + 1; i++)
     {
         for (long long j = 0; j < text.length() + 1; j++)
@@ -85,6 +85,7 @@ int main(int argc, char **argv)
             }
             //cout << "R[" << i << "][" << j << "]" << R[i][j];
         }
+     
     }
     tm = timer.Stop();
     cout << std::endl << "Time: " << tm << std::endl;

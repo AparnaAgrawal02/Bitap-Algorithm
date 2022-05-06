@@ -4,8 +4,8 @@ HEADERS_DIR = $(SRC_DIR)
 
 INP_DIR = alignment_dataset/medium
 # INP_FILE = $(INP_DIR)
-CC = g++
-CFLAGS = -I$(HEADERS_DIR) -g -std=c++17 -O3 -fopenmp # -fsanitize=thread 
+CC = icc
+CFLAGS = -I$(HEADERS_DIR) -g -std=c++17 -fopenmp -O3 # -fsanitize=thread 
 
 HEADERS_PATHLESS = utils.h
 HEADERS = $(patsubst %, $(HEADERS_DIR)/%, $(HEADERS_PATHLESS))
