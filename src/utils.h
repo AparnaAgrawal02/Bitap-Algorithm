@@ -21,7 +21,7 @@
 #include <unordered_set>
 #include <utility>
 #include <vector>
-#include <bitset.h>
+#include <bitset>
 
 using std::cout; 
 using std::cin;
