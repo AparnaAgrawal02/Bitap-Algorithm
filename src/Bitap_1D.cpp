@@ -14,7 +14,7 @@ int main(int argc, char **argv)
         std::cerr << "Error opening: " << argv[2] << " . You have failed." << std::endl;
         return -1;
     }
-    string line, id, text, pattern;
+    string line, id, text, pattern;//string can contain2^32 characters
     while (std::getline(input, line))
     {
 
@@ -95,7 +95,7 @@ int main(int argc, char **argv)
         cout<<pattern_bitmask[i];
     } */
     timer.Start();
-    #pragma omp parallel for
+    
     for (long long j = 0; j < text.length(); j++){
         R|=1;                                                   //to set 1st bit cause 0&1 ==0 and 1&1 =1 and left shift adds 0 
          R= R & pattern_bitmask[link[text[j]]];                 //ita j-1 th column shifted 1 bit and bitmask of character at jth index

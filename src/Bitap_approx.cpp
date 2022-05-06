@@ -13,7 +13,7 @@ int main(int argc, char **argv)
         std::cerr << "Error opening: " << argv[2] << " . You have failed." << std::endl;
         return -1;
     }
-    string line, id, text, pattern;
+    string line, id, text, pattern; //string can contain2^32 characters
     while (std::getline(input, line))
     {
 

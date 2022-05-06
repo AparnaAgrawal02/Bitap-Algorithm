@@ -1,4 +1,5 @@
 #include "utils.h"
+#include "Timer.h"
 int main(int argc, char **argv)
 {
     std::ifstream input(argv[1]);
@@ -58,22 +59,6 @@ int main(int argc, char **argv)
         }
     }
 
-    // output final entry
-    // but ONLY if id actually contains something
-    // if (!id.empty())
-    //     std::cout << id << " : " << text << std::endl;
-
-    // cin >> text;
-    // cin >> pattern;
-    // text = argv[1];
-    // pattern = argv[2];
-    // cout << text << pattern;
-    // if (pattern.length() == 0)
-    // {
-    //     return 0;
-    // }
-    // cout << pattern.length();
-
     // vector<vector<int>> pattern_bitmask(4, vector<int>(pattern.length() + 1, 0));   //0 th vector is A,1 th C,2 -G,3 -T
     unsigned long long R;
     vector<unsigned long long> pattern_bitmask(4, ~0);
@@ -85,24 +70,48 @@ int main(int argc, char **argv)
 
     // set 0 for match
 
-    
+    auto timer = Timer();
     for (long long i = 0; i < pattern.length(); i++)
 
     {
-          pattern_bitmask[link[pattern[i]]] &= ~(1 << i); // reverse
+        pattern_bitmask[link[pattern[i]]] &= ~(1 << i); // reverse
     }
-   
+
     R = 2 ^ pattern.length() - 1;
 
-    for (long long j = 0; j < text.length(); j++)
-    {
-        // to set 1st bit cause 0&1 ==0 and 1&1 =1 and left shift adds 0
-        R = R | pattern_bitmask[link[text[j]]]; // ita j-1 th column shifted 1 bit and bitmask of character at jth index
-        R <<= 1;                                // shift
-        if (0 == ((R >> (pattern.length() )) & 1)) // this means whole pattern is there at j-m+1 pos
-            cout << "{" << j - pattern.length() + 2 << "}";
-       // cout << "[" << R << "]";
-    }
+    timer.Start();
 
-    return 0;
+    int wordSize = 3;
+    int start = 0,end =0;
+    for (long long r = 0; r < text.length() / wordSize; r += 1)
+    {
+        if (r == 0)
+        {
+            start = 0;
+        }
+        else
+        {
+            start = r * wordSize - pattern.length();
+        }
+        if(r!= text.length() / wordSize-1){
+            end =r*wordSize +wordSize + pattern.length() ;
+        }
+        else{
+            end = text.length() ;
+        }
+
+        for (long long j = start;j < wordSize + pattern.length() && text[j] != '\0'; j++)
+        {
+            // to set 1st bit cause 0&1 ==0 and 1&1 =1 and left shift adds 0
+            R = R | pattern_bitmask[link[text[j]]]; // ita j-1 th column shifted 1 bit and bitmask of character at jth index
+            R <<= 1;                                // shift
+
+            if (0 == ((R >> (pattern.length())) & 1)) // this means whole pattern is there at j-m+1 pos
+                cout << "{" << j - pattern.length() + 2 << "}";
+            // cout << "[" << R << "]";
+        }
+        auto time = timer.Stop();
+        cout << "Time: " << time << " ms" << std::endl;
+        return 0;
+    }
 }
