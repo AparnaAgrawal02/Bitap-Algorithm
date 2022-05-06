@@ -93,6 +93,9 @@ int main(int argc, char **argv)
 
     // set 0 for match
 
+    if(error>pattern.length()){
+        error = pattern.length();
+    }
     for (long long i = 0; i < pattern.length(); i++)
 
     {
