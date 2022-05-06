@@ -1,7 +1,8 @@
 #include "utils.h"
 #include "Timer.h"
 int main(int argc, char **argv)
-{
+{   
+    int count =0;
     std::ifstream input(argv[1]);
     if (!input.good())
     {
@@ -98,15 +99,17 @@ int main(int argc, char **argv)
     timer.Start();
     for (long long j = 0; j < text.length(); j++)
     {
-        // to set 1st bit cause 0&1 ==0 and 1&1 =1 and left shift adds 0
-        R = R | pattern_bitmask[link[text[j]]]; // ita j-1 th column shifted 1 bit and bitmask of character at jth index
+        // to set 1st bit cause 0|1 ==1 and 0|0 =0 and left shift adds 0
+        R = R | pattern_bitmask[link[text[j]]]; // its j-1 th column shifted 1 bit and bitmask of character at jth index
         R <<= 1;                                // shift
 
         if (0 == ((R >> (pattern.length() )) & 1)) // this means whole pattern is there at j-m+1 pos
-            cout << "{" << j - pattern.length() + 2 << "}";
+            //cout << "{" << j - pattern.length() + 2 << "}";
+            count++;
        // cout << "[" << R << "]";
     }
     auto time = timer.Stop();
+    cout<<count;
     cout << "Time: " << time << " ms" << std::endl;
     return 0;
 }

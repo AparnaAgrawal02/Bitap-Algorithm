@@ -14,6 +14,7 @@ int main(int argc, char **argv)
         std::cerr << "Error opening: " << argv[2] << " . You have failed." << std::endl;
         return -1;
     }
+    std::unordered_set<uint32_t> indexes;
     string line, id, text, pattern;//string can contain2^32 characters
     while (std::getline(input, line))
     {
@@ -98,16 +99,21 @@ int main(int argc, char **argv)
     
     for (long long j = 0; j < text.length(); j++){
         R|=1;                                                   //to set 1st bit cause 0&1 ==0 and 1&1 =1 and left shift adds 0 
-         R= R & pattern_bitmask[link[text[j]]];                 //ita j-1 th column shifted 1 bit and bitmask of character at jth index
+         R= R & pattern_bitmask[link[text[j]]];                 //ita j-1 th column shifted 1 bit and bitmask of character of jth text character
          R <<= 1;                                               //shift
         
         if (1 == (( R>> ( pattern.length())) & 1))              //this means whole pattern is there at j-m+1 pos
-               cout << "{" << j - pattern.length() + 2 << "}";
+                indexes.insert( j - pattern.length() + 2 );
         //cout<< "["<<R<<"]";
 
     }
     auto time = timer.Stop();
     cout << "\n Time :" << time << std::endl;
+    cout << indexes.size() << "\n";
+    /* for (auto i = indexes.begin(); i != indexes.end(); ++i)
+    {
+        cout << *i << " ";
+    } */
 
     return 0;
 }

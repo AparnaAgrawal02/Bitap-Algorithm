@@ -85,16 +85,16 @@ int main(int argc, char **argv)
 
         timer.Start();
 
-        int wordSize = 15;
+        int wordSize = 32;
         int start = 0, end = 0;
 
 #pragma omp parallel for
-        for (long long r = 0; r < text.length() / wordSize + 1; r += 1)
-        {
+        for (long long r = 0; r < (text.length() / wordSize) + 1; r += 1)
+        { // cout<<r;
             R = 2 ^ m - 1;
             // cout<< text.length() / wordSize + 1;
             start = r * wordSize;
-            if (r * wordSize + wordSize <= text.length())
+            if (r * wordSize + wordSize + m <= text.length())
             {
                 end = r * wordSize + wordSize + m;
             }
@@ -102,7 +102,8 @@ int main(int argc, char **argv)
             {
                 end = text.length();
             }
-            //cout<<"start="<<start<<"|"<<"end "<<end;
+            
+            
             for (long long j = start; j < end; j++)
             {
                 // to set 1st bit cause 0&1 ==0 and 1&1 =1 and left shift adds 0
@@ -112,6 +113,7 @@ int main(int argc, char **argv)
                 if (0 == ((R >> (m)) & 1)) // this means whole pattern is there at j-m+1 pos
 #pragma omp critical
                 {
+                
                     indexes.insert(j - m + 1);
                 }
             }

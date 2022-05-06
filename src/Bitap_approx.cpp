@@ -58,26 +58,12 @@ int main(int argc, char **argv)
         }
     }
 
-    // output final entry
-    // but ONLY if id actually contains something
-    // if (!id.empty())
-    //     std::cout << id << " : " << text << std::endl;
-
-    // cin >> text;
-    // cin >> pattern;
-    // text = argv[1];
-    // pattern = argv[2];
-    // cout << text << pattern;
-    // if (pattern.length() == 0)
-    // {
-    //     return 0;
-    // }
-    // cout << pattern.length();
+   
 
     // vector<vector<int>> pattern_bitmask(4, vector<int>(pattern.length() + 1, 0));   //0 th vector is A,1 th C,2 -G,3 -T
     int error =  atoi(argv[3]);
     //cout<<error;
-    vector<unsigned long long> Table(error, ~0);
+    vector<unsigned long long> Table(error+1, ~0);
     vector<unsigned long long> OldTable(error+1, ~0);
     vector<unsigned long long> pattern_bitmask(4, ~0);
     unsigned long long deletion;
@@ -92,8 +78,8 @@ int main(int argc, char **argv)
     link['T'] = 3;
 
     // set 0 for match
-
-    if(error>pattern.length()){
+     int count =0;
+    if(error>=pattern.length()){
         error = pattern.length();
     }
     for (long long i = 0; i < pattern.length(); i++)
@@ -121,9 +107,10 @@ int main(int argc, char **argv)
         }
 
         if (0 == ((Table[error] >> (pattern.length())) & 1)) // this means whole pattern is there at j-m+2 pos
-            cout << "{" << j - pattern.length() + 2 << "}";
+            count++;
+            //cout << "{" << j - pattern.length() + 2 << "}";
         //cout << "[" <<j<< R[error] << "]";
     }
-
+    cout<<count;
     return 0;
 }
