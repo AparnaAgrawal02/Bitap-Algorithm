@@ -10,8 +10,8 @@ CFLAGS = -I$(HEADERS_DIR) -g -std=c++17 -O3 -fopenmp # -fsanitize=thread
 HEADERS_PATHLESS = utils.h
 HEADERS = $(patsubst %, $(HEADERS_DIR)/%, $(HEADERS_PATHLESS))
 
-EXECUTABLES = bitap_1D
-all:bitap_1D bitap_2D bitap_2D_parallel bitap_1D_1computation_less #bitap
+EXECUTABLES = bitap_1D bitap_2D bitap_2D_parallel bitap_1D_1computation_less bitap_approx 
+all:bitap_1D bitap_2D bitap_2D_parallel bitap_1D_1computation_less bitap_approx #bitap
 # all: $(SRC_DIR)/%.cpp $(HEADERS_DIR)/%.h $(HEADERS_DIR)/%.hpp 
 # 	$(CC) $(CFLAGS) $^ -o $@
 
@@ -28,6 +28,8 @@ bitap_2D_parallel: $(SRC_DIR)/Bitap_2D_parallel.cpp $(HEADERS_DIR)/utils.h
 bitap_1D_1computation_less: $(SRC_DIR)/Bitap_1D_1computation_less.cpp $(HEADERS_DIR)/utils.h
 	$(CC) $(CFLAGS) $(SRC_DIR)/Bitap_1D_1computation_less.cpp -o $@
 
+bitap_approx: $(SRC_DIR)/Bitap_approx.cpp $(HEADERS_DIR)/utils.h
+	$(CC) $(CFLAGS) $(SRC_DIR)/Bitap_approx.cpp -o $@
 
 # bitap: $(SRC_DIR)/Bitap.cpp $(HEADERS)
 # 	$(CC) $(CFLAGS) $(SRC_DIR)/Bitap.cpp -o $@
@@ -39,7 +41,7 @@ dev: CFLAGS += -Wall -Wextra -O2 -Wswitch-default -Wconversion -Wundef -fsanitiz
 dev: bitap_1D bitap_2D bitap_2D_parallel bitap_1D_1computation_less
 
 clean:
-	rm -f bitap_2D bitap_1D bitap_2D_parallel bitap_1D_1computation_less
+	rm -f bitap_2D bitap_1D bitap_2D_parallel bitap_1D_1computation_less bitap_approx
 
 # .PHONY: run
 # run:
