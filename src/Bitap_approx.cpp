@@ -95,7 +95,7 @@ int main(int argc, char **argv)
         
         for (long x = 1; x < error+1; x++)
         {
-            deletion = OldTable[x- 1];           //we ovserve 0s at different places(suppos 0 is at 4th postion that means 4/5 are match at any place so deleteing a character says though you have shofted but 4/5 mathc is still there
+            deletion = OldTable[x- 1];           //we observe 0s at different places(suppos 0 is at 4th postion that means 4/5 are match at any place so deleteing a character says though you have shofted but 4/5 mathc is still there
             substitution = OldTable[x- 1] << 1; //basically we observe 0s at different places(suppos 0 is at 4th postion that means 4/5 are match)  so left shift make 4 to 5 that is a substitution will do 
                                                 //since it oocurs in every loop we get substitution at any place 
             insertion = Table[x - 1] << 1;      //can insert 1 more element at any place //shifting adds a element(need all letters hence current Table)

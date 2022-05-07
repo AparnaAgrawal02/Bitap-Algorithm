@@ -61,12 +61,7 @@ int main(int argc, char **argv)
 
     auto timer = Timer();
     std::unordered_set<uint32_t> indexes;
-
-#pragma omp parallel
-    // vector<vector<int>> pattern_bitmask(4, vector<int>(pattern.length() + 1, 0));   //0 th vector is A,1 th C,2 -G,3 -T
-    {
-        unsigned long long R;
-        vector<unsigned long long> pattern_bitmask(4, ~0);
+vector<unsigned long long> pattern_bitmask(4, ~0);
         std::map<char, int> link;
         link['A'] = 0;
         link['C'] = 1;
@@ -74,18 +69,23 @@ int main(int argc, char **argv)
         link['T'] = 3;
         int m = pattern.length();
         // set 0 for match
-
+        #pragma omp parallel for
         for (long long i = 0; i < m; i++)
 
         {
             pattern_bitmask[link[pattern[i]]] &= ~(1 << i); // reverse
-        }
+        }    
+
+#pragma omp parallel
+    // vector<vector<int>> pattern_bitmask(4, vector<int>(pattern.length() + 1, 0));   //0 th vector is A,1 th C,2 -G,3 -T
+    {
+        unsigned long long R;
 
         // R = 2 ^ pattern.length() - 1;
 
         timer.Start();
 
-        int wordSize = 32;
+        long long  wordSize = 100000;
         int start = 0, end = 0;
 
 #pragma omp parallel for

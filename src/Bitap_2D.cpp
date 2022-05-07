@@ -1,4 +1,5 @@
 #include "utils.h"
+#include "Timer.h"
 int main(int argc, char **argv)
 {
     std::ifstream input(argv[1]);
@@ -14,6 +15,7 @@ int main(int argc, char **argv)
         return -1;
     }
     string line, id, text, pattern;//string can contain2^32 characters
+
     while (std::getline(input, line))
     {
 
@@ -63,20 +65,10 @@ int main(int argc, char **argv)
     // if (!id.empty())
     //     std::cout << id << " : " << text << std::endl;
 
-
-
-    // cin >> text;
-    // cin >> pattern;
-    // text = argv[1];
-    // pattern = argv[2];
-    // cout << text << pattern;
-    // if (pattern.length() == 0)
-    // {
-    //     return 0;
-    // }
-    // cout << pattern.length();
+    auto timer = Timer();
     vector<vector<int>> R(pattern.length() + 2, vector<int>(text.length() + 1, 0));
-    cout<<pattern<<"|"<<text;
+    //cout<<pattern<<"|"<<text;
+    
     for (long long i = 0; i < pattern.length() + 1; i++)
     {
         for (long long j = 0; j < text.length() + 1; j++)
@@ -92,11 +84,13 @@ int main(int argc, char **argv)
             }
             if (R[pattern.length()][j] == 1)
             {
-                cout << "{" << j - pattern.length() + 1 << "}";     // indexing start from 1 // where you find the patern
+                //cout << "{" << j - pattern.length() + 1 << "}";     // indexing start from 1 // where you find the patern
             }
             //cout << "R[" << i << "][" << j << "]" << R[i][j];
         }
     }
+    auto time = timer.Stop();
+    cout << "Time: " << time << " ms" << std::endl;
 
     return 0;
 }
